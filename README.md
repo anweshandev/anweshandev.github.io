@@ -27,4 +27,4 @@ It does feature a contact form, built with [ViteJS](https://vitejs.dev) and Java
 
 :warning: Please note that this version of the **website** is now **partially maintained**. It is superseeded in favour of version 2 of the website.
 
-To know more about the version of this website please check the [versions file](VERSION.md).
+To know more about the version of this website please check the [versions file](/../main/VERSION.md).
