@@ -15,16 +15,4 @@ That settles the debate. My username is *anrcry...* (No one is crying, except me
 
 ## Versions of this website
 
-> :warning: The **main** branch is always *stable* and will be the replica of the **actively maintained** branch at all times. However it may be behind in commits when compared to the **active** branch. This is done to ensure stability and reduce *bugs*.
-
-| version | branch name | is_main | is_stable |          status         |      domain      |
-|:-------:|:-----------:|:-------:|:---------:|:-----------------------:|:----------------:|
-|    1    |      v1     |    no   |    yes    |       *partially maintained*      | [anrcry.github.io](https://anrcry.github.io) |
-|    2    |      v2     | **yes** |  **no**  | **actively maintained** |    TO BE ADDED   |
-
-### Terms
-
-- `partially maintained - Pull requests such as typos, major bugs, issues which hamper the view of the site are merged and deployed. Other than this, no other major feature is added.`
-- `actively maintained - The branch is leading in commits as maintainers actively push code 📌, fix bugs 🐛, add new features ✨`
-
-> :bulb: **Tip**: There will be only one **actively maintained** *branch*. Other branches may be *partially maintained* or just *maintained*.
+Please see the [versions file] exclusive to the main branch.
