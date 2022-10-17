@@ -1,10 +1,10 @@
 {
-  "name": "@formula21",
-  "short_name": "@formula21",
+  "name": "anrcry",
+  "short_name": "anrcry",
   "start_url": "/",
   "scope":"/",
   "display": "minimal-ui",
-  "description": "An awesome application by @formula21 alias Anweshan Roy Chowdhury!!",
+  "description": "An awesome website of @anrcry.",
   "background_color": "#dc3545",
   "theme_color": "#dc3545",
   "icons": [{
