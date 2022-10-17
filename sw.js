@@ -1,8 +1,9 @@
 // const OFFLINE_URL = '/offline.html';
 
-self.addEventListener('install', function(event) {
+self.addEventListener('install', (event) => {
+    console.log("🛠", 'install', event);
   event.waitUntil(
-    caches.open('v1').then(function(cache) {return cache.addAll([]);})
+    caches.open('v1').then( cache => cache.addAll([]) )
   );
 });
 
@@ -11,7 +12,8 @@ self.addEventListener('activate', (event) => {
     return self.clients.claim();
 });
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', (event) => {
+    console.log("🏀", 'fetch', event)
     event.respondWith(
         caches.match(event.request)
         .then(function(response) {
@@ -20,17 +22,10 @@ self.addEventListener('fetch', function(event) {
                 return response;
             }
             return fetch(event.request).then(
-                function(response) {
-                    // Check if we received a valid response
-                    if (!response || response.status !==
-                        200 || response.type !== 'basic') {
-                        return response;
-                    }
+                (response) => {
                     return response;
                 }
-            ).catch(
-                // () => caches.match(OFFLINE_URL));
-                (e) => console.log(e));
+            ).catch(e => console.error(e));
         })
     );
 });
