@@ -117,7 +117,7 @@ A volatile branch is considered to be the one where multiple contributions are c
 
 [![Actively Maintained](https://img.shields.io/badge/v1-actively%20maintained-red?style=for-the-badge)](https://github.com/anrcry/anrcry.github.io/tree/v2)
 
-![Volatile](https://img.shields.io/badge/volatile-stable-blue?style=for-the-badge)
+![Volatile](https://img.shields.io/badge/status-volatile-blue?style=for-the-badge)
 
 ![Tags:N/A](https://img.shields.io/badge/N/A-Tags-inactive?style=for-the-badge)
 
