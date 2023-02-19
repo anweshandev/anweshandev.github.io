@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>VR Scene</title>
+	</head>
+	<body>
+		<script>
+		  console.clear()
+		  
+		  window.addEventListener('click', () => document.querySelector('#fire').play());
+		</script>
+		<!--
+
+		Later versions of aframe are currently broken with aframe-physics-system.
+		Using 1.3.0 to avoid errors.
+
+		Includes aframe-extras and aframe-troika-text for convenience.
+
+		-->
+		<script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+		<script src="https://unpkg.com/aframe-troika-text/dist/aframe-troika-text.min.js"></script>
+
+		<a-scene fog="color: #111; near: 2; far: 16;">
+		  <a-assets>
+			<!-- Assets -->
+			<img id="floor-base" src="assets/tiling_17_basecolor.webp" />
+			<img id="floor-normal" src="assets/tiling_17_normal.jpg" />
+			<img id="concrete-base" src="assets/concrete_31-diffuse.webp" />
+			<img id="concrete-normal" src="assets/concrete_31-normal.webp" />
+			<img id="painting-1" src="assets/305489987_10228798301763796_4610786357702903135_n.jpg" />
+			<img id="painting-2" src="assets/halftruth.jpg" />
+			<img id="light-alpha" src="assets/spotlight.png?format=auto&rotate=90" />
+			<img id="sign" src="assets/sign.gif" />
+			<video id="fire" src="assets/fire.mp4" autoplay loop></video>
+			
+			<!-- Mixins -->
+			<a-mixin id="mat-concrete" material="color: #fff; src: #concrete-base; repeat: 8 8; normalMap: #concrete-normal; normalTextureRepeat: 8 8; roughness: 0.5;"></a-mixin>
+			<a-mixin id="wall" mixin="mat-concrete" geometry="primitive: plane; width: 10; height: 5"></a-mixin>
+			<a-mixin id="pillar" mixin="mat-concrete" geometry="primitive: box; width: 0.5; height: 5; depth: 0.5" material="repeat: 1 8; normalTextureRepeat: 1 8"></a-mixin>
+			<a-mixin id="abslight" geometry="primitive: cylinder; segments-radial: 6; radius: 0.04; height: 2" material="color: white; emissive: white; emissiveIntensity: 3"></a-mixin>
+			<a-mixin id="metal" material="color: silver; roughness: 0.2; metalness: 0.6"></a-mixin>
+		  </a-assets>
+
+		  <!-- Camera + move controls (WASD/mouse, tap-hold, 3D VR etc) -->
+		  <a-entity id="rig" movement-controls="speed: 0.1" position="1 0 3" rotation="0 45 0">
+			<a-entity camera position="0 1.2 0" look-controls></a-entity>
+		  </a-entity>
+
+		  <!-- Gallery walls, floor & ceiling -->
+		  <a-plane id="floor" rotation="-90 0 0" width="5" height="10" material="color: silver; src: #floor-base; repeat: 4 8; normalMap: #floor-normal; normalTextureRepeat: 8 8; roughness: 0.3; "></a-plane>
+		  <a-entity id="wall-n" mixin="wall" position="0 2.5 -5" geometry="width: 5" material="color: #333"></a-entity>
+		  <a-entity id="wall-w" mixin="wall" rotation="0 90 0" position="-2.5 2.5 0"></a-entity>
+		  <a-entity id="wall-e" mixin="wall" rotation="0 -90 0" position="2.5 2.5 0"></a-entity>
+		  <a-entity id="wall-s" mixin="wall" rotation="0 -180 0" position="0 2.5 5" geometry="width: 5" material="color: #333"></a-entity>
+		  <a-plane id="ceiling" rotation="90 0 0" width="5" height="10" position="0 5 0" material="color: #fff; roughness: 1;"></a-plane>
+
+		  <!-- Ceiling inset -->
+		  <a-box width="4" height="0.5" depth="9" position="0 4.75 0" material="color: #333; src: #concrete-base"></a-box>
+
+		  <!-- Pillars -->
+		  <a-entity mixin="pillar" position="-2.25 2.5 -2.19"></a-entity>
+		  <a-entity mixin="pillar" position="2.25 2.5 2.19">
+			<a-image src="#sign" width="0.2" height="0.3" rotation="0 -90 0" position="-0.26 -0.5 0"></a-image>
+		  </a-entity>
+
+		  <!-- ninacouserart.com -->
+		  <a-troika-text value="ninacouserart.com" rotation="0 -90 0" position="2.49 0.6 -4.2" color="#333" font-size="0.2" fill-opacity="0.5" anchor="left"></a-troika-text>
+
+		  <!-- Autumn picture + label -->
+		  <a-box id="pic-frame-n" position="0 1.5 -4.95" width="0.9" height="1.2" depth="0.2" material="color: #fff;">
+			<a-plane id="pic-n" position="0 0 0.105" width="0.72" height="0.96" material="src: #painting-1;"></a-plane>
+		  </a-box>
+
+		  <a-plane scale="0.7 0.7 0.7" id="pic-text-n" width="0.3" height="0.3" position="0.6 1.5 -4.99" material="color: #fff">
+			<a-troika-text value="Autumn\n\n" position="-0.12 0 0.01" color="#111" font-size="0.03" anchor="left"></a-troika-text>
+			<a-troika-text value="\n\n\nAcrylic on canvas\nActual size (framed): 14in x 17.5in" position="-0.12 0 0.01" color="#222" font-size="0.015" anchor="left"></a-troika-text>
+		  </a-plane>
+
+		  <!-- Spotlight w/ fake beam effect -->
+		  <a-cylinder radius="0.1" segments-radial="6" height="0.4" material="color: #111; metalness: 0.7; roughness: 0.; side: double" open-ended="true" position="0 4.1 -2" rotation="40s 0 0">
+			<a-entity light="type: spot; angle: 24; intensity: 0.4; penumbra: 0.6; target: #pic-n" position="0 -0.2 0"></a-entity>
+			<a-cylinder radius="0.08" segments-radial="6" height="0.1" material="color: #fff; emissive: #fff; emissiveIntensity: 3" position="0 -0.16 0" rotation="0 0 0"></a-cylinder>
+			<a-cone segments-radial="12" radius-bottom="0.6" radius-top="0.08" position="0 -0.7 0" open-ended="true" material="shader: flat; fog: false; opacity: 0.4; flatShading: true; color: #fff; side: double; transparent: true; blending: additive; depthWrite: false" alpha-map="src: #light-alpha"></a-cone>
+		  </a-cylinder>
+		  
+		  <!-- Half Truth picture & label -->
+		  <a-plane id="pic-large" rotation="0 90 0" width="2.8" height="3.8" position="-2.49 2.3 1" material="src: #painting-2"></a-plane>
+		  
+		  <a-plane scale="0.7 0.7 0.7" id="pic-text-n" width="0.3" height="0.3" rotation="0 90 0" position="-2.49 1.5 2.6" material="color: #fff">
+			<a-troika-text value="The Half Truth\n\n" position="-0.12 0 0.01" color="#111" font-size="0.03" anchor="left"></a-troika-text>
+			<a-troika-text value="\n\n\nAcrylic on canvas\nActual size (framed): 11in x 9in" position="-0.12 0 0.01" color="#222" font-size="0.015" anchor="left"></a-troika-text>
+		  </a-plane>
+		  
+		  <!-- Abstract ceiling lights -->
+		  <a-entity light="type: point; intensity: 2; distance: 9; color: #fff;" position="0 3 0"></a-entity>
+		  <a-entity position="0 5 0" rotation="0 90 0">
+			<a-entity line="start: 0 0 0; end: 0 -2 0; color: silver"></a-entity>
+			<a-entity mixin="abslight" position="0 -2 0" rotation="60 30 20"></a-entity>
+			<a-entity mixin="abslight" position="0 -1.25 0" rotation="20 110 60"></a-entity>
+			<a-entity mixin="abslight" position="0 -1.75 0" rotation="70 90 120"></a-entity>
+			<a-entity mixin="abslight" position="0 -1 0" rotation="20 60 110"></a-entity>
+		  </a-entity>
+		  
+		  <!-- Pile of shiny D12s -->
+		  <a-entity position="-1.8 0 -4">
+			<a-dodecahedron mixin="metal" radius="0.2" position="0 1.3 0" rotation="110 70 30"></a-dodecahedron>
+			<a-dodecahedron mixin="metal" radius="0.3" position="0 0.9 0" rotation="70 20 110"></a-dodecahedron>
+			<a-dodecahedron mixin="metal" radius="0.4" position="0 0.4 0" rotation="0 -50 0"></a-dodecahedron>
+			<a-cylinder radius="0.5" height="0.1" material="color: white" position="0 0.05 0"></a-cylinder>
+		  </a-entity>
+		  
+		  <!-- Abstract wa;ll panels -->
+		  <a-box mixin="mat-concrete" width="1" height="1" depth="0.1" position="2.5 3 0" rotation="5 -90 0"></a-box>
+		  <a-box mixin="mat-concrete" width="1" height="1" depth="0.1" position="2.5 2 1" rotation="-5 -90 0"></a-box>
+		  <a-box mixin="mat-concrete" width="1" height="1" depth="0.1" position="2.5 1 0" rotation="5 -90 0"></a-box>
+		  
+		  <!-- Fireplace -->
+		  <a-box id="fireplace" width="2" height="1" depth="0.5" position="0 1 5" material="color: #000;" rotation="0 -180 0">
+			<a-video src="#fire" position="0 0 0.255" width="1.6" height="0.6">
+			  <a-entity light="type: point; color: #f70; intensity: 1; distance: 1" position="-1 -0.5 0.5"></a-entity>
+			  <a-entity light="type: point; color: #f70; intensity: 1; distance: 2" position="0 -0.5 0.5"></a-entity>
+			  <a-entity light="type: point; color: #f70; intensity: 1; distance: 1" position="1 -0.5 0.5"></a-entity>
+			</a-video>
+		  </a-box>
+		  
+		  <!-- 'Seats' -->
+		  <a-box material="color: #111; roughness: 1;" width="0.5" height="0.5" depth="0.5" position="1.9 0.25 1.3" rotation="0 20 0"></a-box>
+		  <a-box material="color: #111; roughness: 1;" width="0.5" height="0.5" depth="0.5" position="1.3 0.25 2.2" rotation="0 -10 0"></a-box>
+		  <a-box material="color: #111; roughness: 1;" width="0.5" height="0.5" depth="0.5" position="1.8 0.25 3" rotation="0 -5 0"></a-box>
+		</a-scene>
+
+		<script>
+		  // Exposes THREE's alphaMap for A-Frame to use.
+		  // Used for the fake spotlight effect.
+		  AFRAME.registerComponent('alpha-map', {
+			schema: {
+			  src: {
+				type: 'map'
+			  }
+			},
+			init: function() {
+			  this.el.sceneEl.systems.material.loadTexture(this.data.src, {
+				src: this.data.src
+			  }, this.callback.bind(this));
+			},
+			callback: function(texture) {
+			  const mat = this.el.object3DMap.mesh.material;
+			  mat.alphaMap = texture;
+			}
+		  });
+		</script>
+	</body>
+</html>
