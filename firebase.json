@@ -25,6 +25,7 @@
   ],
   "hosting": {
     "public": "build",
+	"site": "anweshan-dev",
     "ignore": [
       "firebase.json",
       "**/.*",
