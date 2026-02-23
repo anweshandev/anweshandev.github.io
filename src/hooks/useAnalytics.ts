@@ -7,9 +7,11 @@ export const useAnalytics = () => {
   const location = useLocation();
 
   useEffect(() => {
+    if (!analytics) return;
+
     isSupported().then(yes => {
       if (yes) {
-        logEvent(analytics, 'page_view', {
+        logEvent(analytics!, 'page_view', {
           page_path: location.pathname,
           page_title: document.title
         });
@@ -18,9 +20,11 @@ export const useAnalytics = () => {
   }, [location]);
 
   const trackClick = (elementName: string) => {
+    if (!analytics) return;
+
     isSupported().then(yes => {
       if (yes) {
-        logEvent(analytics, 'select_content', {
+        logEvent(analytics!, 'select_content', {
           content_type: 'button',
           item_id: elementName
         });

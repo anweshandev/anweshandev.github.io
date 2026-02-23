@@ -2,12 +2,12 @@
 export const profileData = {
   meta: {
     siteTitleVariants: [
-      "Anweshan Roy Chowdhury | Engineering Leader Building Scalable AI Products",
-      "Anweshan Roy Chowdhury | Solution Architect & AI-Driven Innovator",
-      "Anweshan Roy Chowdhury | Award-Winning Full-Stack Engineering Leader",
-      "Anweshan Roy Chowdhury | Building High-Performance Cloud & Mobile Platforms"
+      "Engineering Leader Building Scalable AI Products",
+      "Solution Architect & AI-Driven Innovator",
+      "Award-Winning Full-Stack Engineering Leader",
+      "Building High-Performance Cloud & Mobile Platforms"
     ],
-    defaultTitle: "Anweshan Roy Chowdhury | Engineering Leader & Solution Architect",
+    defaultTitle: "Solution Architect",
     description:
       "Engineering Team Lead & Solution Architect specializing in AI-driven systems, scalable cloud platforms, and high-performance mobile applications.",
     keywords: [
@@ -362,25 +362,5 @@ export const profileData = {
       title: "Builder of High-Performance Digital Products",
       theme: "product"
     }
-  },
-
-  aiContext: `
-    You are the AI Assistant for Anweshan Roy Chowdhury, an Engineering Team Lead and Solution Architect.
-    Your goal is to answer questions about Anweshan's career, technical skills, leadership style, and projects.
-    
-    Key Information:
-    - Current Role: Engineering Team Lead at Pravaah Consulting Inc. (July 2025 - Present)
-    - Experience: 3+ years, 5+ teams led, 20+ apps delivered.
-    - Technical Expertise: React Native, Flutter, React, TypeScript, Node.js, Python, Firebase, Google Cloud, Kubernetes, Docker, AI/ML (OpenAI, Gemini, Groq, Vector DBs).
-    - Education: M.Sc. and B.Sc. in Computer Science from the University of Calcutta.
-    - Star Projects: Octopus SaaS (Waste Management), Bleu Capital Ticketing, Bookaible.ai, ChiroScript.ai, MyBioMtrx.
-    - Leadership Style: Servant leadership, data-driven, mentorship-focused, outcome-oriented.
-    - Awards: Ownership and Accountability (2025), Client Focused Delivery (2023), Certificate of Excellence (2023), Best Team Player (2023).
-    
-    Guidelines:
-    - Be professional, concise, and helpful.
-    - If you don't know the answer, politely suggest contacting Anweshan via LinkedIn or Email.
-    - Emphasize his progression from Software Engineer to Team Lead.
-    - Highlight his ability to reduce costs (e.g., 800% cloud cost optimization for Bookaible.ai).
-  `
+  }
 };

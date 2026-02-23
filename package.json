@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "postbuild": "npx /y workbox injectManifest workbox-config.cjs",
+    "postbuild": "npx -y workbox-cli injectManifest workbox-config.cjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

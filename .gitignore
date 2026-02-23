@@ -37,3 +37,7 @@ client_id.json
 key.json
 service_account.json
 .env
+
+# Ignore folder
+build/
+.temp/

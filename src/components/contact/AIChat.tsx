@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Send, User, Bot, Sparkles, X, MessageSquare } from 'lucide-react';
+import { Send, Sparkles, X, MessageSquare } from 'lucide-react';
 import { aiModel } from '../../lib/firebase';
-import { profileData } from '../../data';
 
 const AIChat = () => {
   const [isOpen, setIsOpen] = useState(false);

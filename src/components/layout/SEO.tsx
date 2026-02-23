@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { profileData } from '../data';
+import { profileData } from '../../data';
 
 interface SEOProps {
   title?: string;
   description?: string;
-  type?: string;
 }
 
-const SEO = ({ title, description, type = 'website' }: SEOProps) => {
-  const { pathname } = useLocation();
+const SEO = ({ title, description }: SEOProps) => {
+  useLocation();
   const siteTitle = title 
     ? `${title} | ${profileData.header.name}`
     : profileData.meta.defaultTitle;

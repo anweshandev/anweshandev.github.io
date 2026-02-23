@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
-import { getAnalytics, isSupported } from "firebase/analytics";
+import { getAnalytics } from "firebase/analytics";
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 import { getAI, getTemplateGenerativeModel, GoogleAIBackend } from "firebase/ai";
 
@@ -28,16 +28,17 @@ if (typeof window !== "undefined") {
 // 3. Initialize Firestore
 export const db = getFirestore(app);
 
-// 4. Initialize AI SDK (Gemini Backend)
+// 4. Initialize Analytics (Safe export)
+export const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;
+
+// 5. Initialize AI SDK (Gemini Backend)
 export const ai = getAI(app, { backend: new GoogleAIBackend() });
 export const aiModel = getTemplateGenerativeModel(ai);
 
-// 5. Environment-Specific Logic
+// 6. Environment-Specific Logic
 if (import.meta.env.DEV) {
   connectFirestoreEmulator(db, '127.0.0.1', 9001);
   console.log("🛠️ Firestore Emulator connected: http://127.0.0.1:9001");
-} else {
-  isSupported().then(yes => yes ? getAnalytics(app) : null);
 }
 
 export default app;
