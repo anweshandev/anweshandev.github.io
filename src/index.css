@@ -18,5 +18,47 @@
 @import '@fontsource/inter/800.css';
 @import '@fontsource/inter/900.css';
 
-
 @import "tailwindcss";
+
+@theme {
+  --font-body: "Inter", sans-serif;
+  --font-heading: "Montserrat", sans-serif;
+}
+
+:root {
+  --text: #091b01;
+  --background: #f4fff1;
+  --primary: #4afa0e;
+  --secondary: #69fcbe;
+  --accent: #3dfbe4;
+}
+
+:root[data-theme="dark"] {
+  --text: #eefee6;
+  --background: #030f00;
+  --primary: #40f005;
+  --secondary: #039659;
+  --accent: #04c3ad;
+}
+
+@layer base {
+  * {
+    @apply border-gray-200 dark:border-gray-800;
+  }
+  body {
+    @apply bg-(--background) text-(--text) font-body;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 10px var(--primary);
+  }
+  .bg-glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+}
