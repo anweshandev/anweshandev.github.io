@@ -40,3 +40,4 @@ service_account.json
 
 # Ignore folder
 build/
+.firebase/
