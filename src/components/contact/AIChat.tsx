@@ -58,7 +58,7 @@ const AIChat = () => {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-8 right-8 z-50 p-4 rounded-full bg-[var(--primary)] text-[var(--background)] shadow-2xl transition-transform hover:scale-110 ${isOpen ? 'scale-0' : 'scale-100'}`}
+        className={`fixed bottom-8 right-8 z-50 p-4 rounded-full bg-[--primary] text-[--background] shadow-2xl transition-transform hover:scale-110 ${isOpen ? 'scale-0' : 'scale-100'}`}
       >
         <MessageSquare size={24} />
       </button>
@@ -70,18 +70,18 @@ const AIChat = () => {
             initial={{ opacity: 0, y: 100, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            className="fixed bottom-8 right-8 z-50 w-[90vw] md:w-[400px] h-[600px] bg-[var(--background)] border border-[var(--text)]/10 rounded-[2rem] shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-8 right-8 z-50 w-[90vw] md:w-100 h-150 bg-[--background] border border-[--text]/10 rounded-4xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="p-6 bg-[var(--text)] text-[var(--background)] flex justify-between items-center">
+            <div className="p-6 bg-[--text] text-[--background] flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[var(--primary)] flex items-center justify-center text-[var(--background)]">
+                <div className="w-10 h-10 rounded-full bg-[--primary] flex items-center justify-center text-[--background]">
                   <Sparkles size={20} />
                 </div>
                 <div>
                   <h3 className="font-bold text-sm">Anweshan's AI</h3>
                   <div className="flex items-center gap-1.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-pulse" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-[--primary] animate-pulse" />
                     <span className="text-[10px] uppercase tracking-widest opacity-60">Online</span>
                   </div>
                 </div>
@@ -97,8 +97,8 @@ const AIChat = () => {
                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${
                     msg.role === 'user' 
-                      ? 'bg-[var(--primary)] text-[var(--background)] rounded-tr-none' 
-                      : 'bg-[var(--text)]/5 text-[var(--text)] rounded-tl-none'
+                      ? 'bg-[--primary] text-[--background] rounded-tr-none' 
+                      : 'bg-[--text]/5 text-[--text] rounded-tl-none'
                   }`}>
                     {msg.content}
                   </div>
@@ -106,11 +106,11 @@ const AIChat = () => {
               ))}
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-[var(--text)]/5 p-4 rounded-2xl rounded-tl-none">
+                  <div className="bg-[--text]/5 p-4 rounded-2xl rounded-tl-none">
                     <div className="flex gap-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-bounce" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-bounce [animation-delay:0.2s]" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-bounce [animation-delay:0.4s]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[--primary] animate-bounce" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[--primary] animate-bounce [animation-delay:0.2s]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[--primary] animate-bounce [animation-delay:0.4s]" />
                     </div>
                   </div>
                 </div>
@@ -118,19 +118,19 @@ const AIChat = () => {
             </div>
 
             {/* Input */}
-            <form onSubmit={handleSend} className="p-6 border-t border-[var(--text)]/5 bg-white/5 dark:bg-black/5">
+            <form onSubmit={handleSend} className="p-6 border-t border-[--text]/5 bg-white/5 dark:bg-black/5">
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Ask about my projects..."
-                  className="w-full pl-6 pr-12 py-4 rounded-xl bg-[var(--text)]/5 border border-transparent focus:border-[var(--primary)]/50 focus:outline-none transition-all text-sm"
+                  className="w-full pl-6 pr-12 py-4 rounded-xl bg-[--text]/5 border border-transparent focus:border-[--primary]/50 focus:outline-none transition-all text-sm"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || isTyping}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-[var(--primary)] text-[var(--background)] disabled:opacity-50 transition-transform hover:scale-105"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-[--primary] text-[--background] disabled:opacity-50 transition-transform hover:scale-105"
                 >
                   <Send size={18} />
                 </button>

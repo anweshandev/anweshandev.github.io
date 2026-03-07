@@ -21,8 +21,8 @@ const ScrollToTop = () => {
 };
 
 const LoadingScreen = () => (
-  <div className="h-screen w-full flex items-center justify-center bg-[var(--background)]">
-    <div className="w-12 h-12 border-4 border-[var(--primary)] border-t-transparent rounded-full animate-spin" />
+  <div className="h-screen w-full flex items-center justify-center bg-(--background)">
+    <div className="w-12 h-12 border-4 border-(--primary) border-t-transparent rounded-full animate-spin" />
   </div>
 );
 
