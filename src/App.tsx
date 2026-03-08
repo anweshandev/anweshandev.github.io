@@ -13,6 +13,8 @@ const Projects = lazy(() => import("./pages/Projects"));
 const Leadership = lazy(() => import("./pages/Leadership"));
 const Awards = lazy(() => import("./pages/Awards"));
 const Contact = lazy(() => import("./pages/Contact"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 
 const ScrollToTop = () => {
 	useScrollToTop();
@@ -51,6 +53,8 @@ function App() {
 						<Route path="leadership" element={<Leadership />} />
 						<Route path="awards" element={<Awards />} />
 						<Route path="contact" element={<Contact />} />
+						<Route path="legal/terms-of-service" element={<TermsOfService />} />
+						<Route path="legal/privacy-policy" element={<PrivacyPolicy />} />
 					</Route>
 				</Routes>
 			</Suspense>

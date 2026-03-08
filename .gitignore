@@ -41,3 +41,9 @@ service_account.json
 # Ignore folder
 build/
 .firebase/
+
+
+# Legal Markdown Files
+!LICENSE.md
+!TOS.md
+!PRIVACY-POLICY.md

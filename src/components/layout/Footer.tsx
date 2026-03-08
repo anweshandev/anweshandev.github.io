@@ -1,5 +1,6 @@
 import { profileData } from '../../data';
 import { Linkedin, Github, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -40,6 +41,22 @@ const Footer = () => {
         </div>
         
         <div className="mt-12 pt-8 border-t border-[--text]/5 text-center text-[--text]/40 text-xs">
+          <p className="mb-2">
+            <Link
+              to="/legal/terms-of-service"
+              className="underline decoration-dotted underline-offset-4 hover:text-[--primary] transition-colors"
+            >
+              Terms of Service
+            </Link>
+          </p>
+          <p className="mb-2">
+            <Link
+              to="/legal/privacy-policy"
+              className="underline decoration-dotted underline-offset-4 hover:text-[--primary] transition-colors"
+            >
+              Privacy Policy
+            </Link>
+          </p>
           <p>&copy; {new Date().getFullYear()} {profileData.header.name}. All rights reserved.</p>
         </div>
       </div>

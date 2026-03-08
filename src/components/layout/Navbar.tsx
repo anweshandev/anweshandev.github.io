@@ -41,6 +41,11 @@ const Navbar = () => {
     { name: 'Contact', path: '/contact' },
   ];
 
+  const legalLinks = [
+    { name: 'Terms', path: '/legal/terms-of-service' },
+    { name: 'Privacy', path: '/legal/privacy-policy' },
+  ];
+
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
@@ -66,6 +71,22 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
+
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-[--text]/15 bg-[--background]/50">
+            <span className="text-[10px] uppercase tracking-widest text-[--text]/45">Legal</span>
+            {legalLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`text-xs transition-colors hover:text-[--primary] ${
+                  location.pathname === link.path ? 'text-[--primary]' : 'text-[--text]/65'
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+
           <button
             onClick={toggleTheme}
             className="p-2 rounded-full hover:bg-[--primary]/10 transition-colors"
@@ -107,6 +128,24 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
+
+          <div className="pt-2 mt-2 border-t border-[--text]/10">
+            <p className="text-[10px] uppercase tracking-widest text-[--text]/45 mb-2">Legal</p>
+            <div className="flex gap-4">
+              {legalLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`text-sm ${
+                    location.pathname === link.path ? 'text-[--primary]' : 'text-[--text]/70'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </motion.div>
     </nav>
