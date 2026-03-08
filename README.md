@@ -1,16 +1,50 @@
 # Anweshan.dev
 
-> A high-signal developer portfolio built to present engineering leadership, architecture thinking, and AI product execution through a fast, modern, interactive web experience.
+> A portfolio engineered like a product: recruiter-friendly on the surface, technically credible underneath.
 
 Live site: [anweshan.cv](https://anweshan.cv)
 
-## Overview
+## What This Is
 
-This project is the personal portfolio of Anweshan Roy Chowdhury, built as more than a static resume site. It is designed as a developer showcase: a production-grade React application that combines narrative portfolio content, rich motion design, 3D elements, legal/compliance pages, analytics, Firestore-backed contact capture, and an AI assistant powered by Firebase AI SDK with Google Gemini.
+This repository powers the personal website of Anweshan Roy Chowdhury. It is designed to do two jobs well:
 
-The goal is simple: present technical credibility through the product itself.
+- Give recruiters and hiring managers a fast, high-signal summary of engineering leadership, architecture range, and product impact.
+- Give developers a real codebase to inspect, with production-minded frontend architecture, Firebase integration, AI features, analytics, and legal/compliance considerations.
 
-## What Makes It Interesting
+It is not a static resume page. It is a deployable React application with interactive UI, structured portfolio content, Firestore-backed contact workflows, and an AI assistant powered by Firebase AI SDK with Google Gemini.
+
+## If You're A Recruiter
+
+This project is intended to communicate the following quickly:
+
+- Engineering leadership, not just implementation skill.
+- Comfort across frontend, mobile, cloud, AI, and platform integration.
+- Ability to turn personal branding into a polished, working product.
+- Attention to production concerns such as analytics, security controls, legal policies, and deployment.
+
+The site content highlights experience across:
+
+- AI-driven product development
+- SaaS platform architecture
+- Mobile engineering
+- Cloud optimization
+- IoT and BLE integrations
+- Enterprise logistics and operations software
+- Technical leadership and team-building
+
+## If You're A Developer
+
+This repo is worth a look if you care about:
+
+- React 19 + TypeScript + Vite architecture
+- Tailwind CSS 4 styling with strong visual identity
+- Route-based lazy loading
+- Firebase Hosting, Firestore, Analytics, App Check, and AI SDK integration
+- Client-side AI chat UX backed by Google Gemini
+- Service worker generation with Workbox
+- Balancing product polish with practical deployment constraints
+
+## Product Highlights
 
 - Built with React 19, TypeScript, Vite, and Tailwind CSS 4.
 - Uses route-based lazy loading for portfolio sections and legal pages.
@@ -19,24 +53,24 @@ The goal is simple: present technical credibility through the product itself.
 - Uses Firebase App Check with reCAPTCHA Enterprise.
 - Tracks page views and user interactions with Google Analytics.
 - Ships with a service worker via Workbox for production readiness.
-- Includes legal pages for Terms of Service and Privacy/Cookie Policy.
-- Structured as a real deployable application on Firebase Hosting, not a brochure page.
+- Includes Terms of Service and Privacy/Cookie Policy pages with AI-processing disclosures.
+- Runs as a real Firebase-hosted SPA, not a mock portfolio shell.
 
-## Experience Design
+## Design Direction
 
-This portfolio is meant to feel opinionated and technical at the same time.
+This portfolio is intentionally opinionated.
 
 - Bold typography using Montserrat and Inter.
 - Motion-driven UI with Motion.
 - Interactive visual elements using Three.js / React Three Fiber.
-- A compact legal navigation layer in both the footer and navbar.
-- Portfolio storytelling that highlights architecture, leadership, product thinking, and delivery impact.
+- Compact legal navigation in both navbar and footer.
+- Portfolio storytelling that emphasizes delivery impact, systems thinking, and technical range.
 
 ## Core Product Areas
 
 ### Portfolio Pages
 
-The application is organized into focused sections for:
+The app includes focused sections for:
 
 - Home
 - Experience
@@ -49,16 +83,16 @@ The application is organized into focused sections for:
 
 ### AI Assistant
 
-The chatbot provides a conversational layer over the portfolio.
+The chatbot adds a conversational interface on top of the portfolio.
 
 - Implemented in the client using Firebase AI SDK.
 - Uses a server-configured template with Google Gemini.
-- Designed to help visitors explore projects, background, and technical capabilities.
-- Covered by legal disclosures describing AI-based parsing and processing.
+- Helps visitors explore projects, background, and technical capabilities.
+- Covered by policy language describing AI-based parsing and third-party processing.
 
 ### Contact Flow
 
-The contact page is not decorative. It is wired to persist inquiries.
+The contact experience is functional, not decorative.
 
 - Captures name, email, subject, and message.
 - Persists submissions to Firestore.
@@ -104,7 +138,7 @@ The contact page is not decorative. It is wired to persist inquiries.
 
 ## Architecture Notes
 
-This codebase deliberately keeps the frontend lean while integrating production platform services.
+The architecture keeps the frontend lean while still integrating real platform services.
 
 - The site is a client-rendered SPA with Firebase Hosting rewrites to `index.html`.
 - Firestore is used directly from the client for contact capture.
@@ -113,6 +147,20 @@ This codebase deliberately keeps the frontend lean while integrating production 
 - The AI assistant uses `getTemplateGenerativeModel` through Firebase AI.
 - A minimal Firebase Functions project exists and is ready for backend expansion.
 - In development, Firestore points to the local emulator.
+
+## Why This Repo Is Useful To Review
+
+For a recruiter, this repo shows how technical identity is translated into product form.
+
+For a developer, it shows a compact example of a modern portfolio that still addresses:
+
+- app structure
+- deployment
+- analytics
+- AI integration
+- abuse protection
+- legal disclosure
+- real data persistence
 
 ## Project Structure
 
@@ -222,18 +270,6 @@ The content and implementation emphasize a specific developer brand:
 - Production-minded frontend engineering.
 - Modern cloud-native tooling with a lightweight deployment story.
 
-## Selected Signal From The Portfolio Content
-
-The site content highlights work across:
-
-- AI-driven product development
-- SaaS platform architecture
-- Mobile engineering
-- Cloud optimization
-- IoT and BLE integrations
-- Enterprise logistics and operations software
-- Technical leadership and team-building
-
 ## Legal & Compliance
 
 The project includes:
@@ -246,9 +282,9 @@ The project includes:
 
 ## Why This Repo Exists
 
-This repository demonstrates how a personal brand site can still be engineered like a serious product.
+This repository demonstrates that a personal site can be treated like a serious software product.
 
-It is a portfolio, but it is also a statement about taste, technical range, and execution discipline.
+It is a portfolio, but it is also a statement about engineering taste, implementation range, and execution discipline.
 
 ## Author
 
