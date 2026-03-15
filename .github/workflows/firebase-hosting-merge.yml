@@ -19,6 +19,9 @@ on:
       - "package.json"
       - "pnpm-lock.yaml"
       - ".env.example"
+  
+  workflow_dispatch:
+    
 
 permissions:
   contents: read
