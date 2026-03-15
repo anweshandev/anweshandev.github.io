@@ -18,8 +18,7 @@ on:
       - "tsconfig*.json"
       - "package.json"
       - "pnpm-lock.yaml"
-  
-  workflow_dispatch:
+      - ".env.example"
 
 permissions:
   contents: read
@@ -59,38 +58,50 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
-      - name: Validate required environment variables
+      - name: Validate secrets against .env.example
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
+          VITE_RECAPTCHA_ENTERPRISE_KEY: ${{ secrets.VITE_RECAPTCHA_ENTERPRISE_KEY }}
         run: |
-          required_vars=(
-            VITE_FIREBASE_API_KEY
-            VITE_FIREBASE_AUTH_DOMAIN
-            VITE_FIREBASE_PROJECT_ID
-            VITE_FIREBASE_STORAGE_BUCKET
-            VITE_FIREBASE_MESSAGING_SENDER_ID
-            VITE_FIREBASE_APP_ID
-            VITE_FIREBASE_MEASUREMENT_ID
-            VITE_RECAPTCHA_ENTERPRISE_KEY
-          )
+          missing=0
+          while IFS= read -r line; do
+            key=$(echo "$line" | cut -d '=' -f1)
+            [ -z "$key" ] && continue
+            value=$(printenv "$key")
 
-          for var in "${required_vars[@]}"; do
-            if [ -z "${{ secrets[var] }}" ]; then
-              echo "❌ Missing required secret: $var"
-              exit 1
+            if [ -z "$value" ]; then
+              echo "❌ Missing required secret: $key"
+              missing=1
             fi
-          done
+          done < .env.example
+
+          if [ "$missing" -eq 1 ]; then
+            echo "❌ One or more required secrets are missing."
+            exit 1
+          fi
 
       - name: Create .env.local
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
+          VITE_RECAPTCHA_ENTERPRISE_KEY: ${{ secrets.VITE_RECAPTCHA_ENTERPRISE_KEY }}
         run: |
-          cat <<EOF > .env.local
-          VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}
-          VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
-          VITE_FIREBASE_PROJECT_ID=${{ secrets.VITE_FIREBASE_PROJECT_ID }}
-          VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
-          VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
-          VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }}
-          VITE_FIREBASE_MEASUREMENT_ID=${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
-          VITE_RECAPTCHA_ENTERPRISE_KEY=${{ secrets.VITE_RECAPTCHA_ENTERPRISE_KEY }}
-          EOF
+          while IFS= read -r line; do
+            key=$(echo "$line" | cut -d '=' -f1)
+            [ -z "$key" ] && continue
+            echo "$key=$(printenv "$key")" >> .env.local
+          done < .env.example
 
       - name: Build the website
         run: pnpm run build
