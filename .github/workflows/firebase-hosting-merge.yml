@@ -4,6 +4,22 @@ on:
   push:
     branches:
       - v3
+    paths:
+      - "assets/**"
+      - "public/**"
+      - "index.html"
+      - "src/**/*.ts"
+      - "src/**/*.tsx"
+      - "src/**/*.js"
+      - "src/**/*.jsx"
+      - "src/**/*.css"
+      - "src/**/*.scss"
+      - "vite.config.*"
+      - "tsconfig*.json"
+      - "package.json"
+      - "pnpm-lock.yaml"
+  
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -31,6 +47,9 @@ jobs:
           node-version: 22
           cache: pnpm
 
+      - name: Ensure Vite cache directory exists
+        run: mkdir -p node_modules/.vite
+
       - name: Cache Vite
         uses: actions/cache@v4
         with:
@@ -39,6 +58,39 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
+
+      - name: Validate required environment variables
+        run: |
+          required_vars=(
+            VITE_FIREBASE_API_KEY
+            VITE_FIREBASE_AUTH_DOMAIN
+            VITE_FIREBASE_PROJECT_ID
+            VITE_FIREBASE_STORAGE_BUCKET
+            VITE_FIREBASE_MESSAGING_SENDER_ID
+            VITE_FIREBASE_APP_ID
+            VITE_FIREBASE_MEASUREMENT_ID
+            VITE_RECAPTCHA_ENTERPRISE_KEY
+          )
+
+          for var in "${required_vars[@]}"; do
+            if [ -z "${{ secrets[var] }}" ]; then
+              echo "❌ Missing required secret: $var"
+              exit 1
+            fi
+          done
+
+      - name: Create .env.local
+        run: |
+          cat <<EOF > .env.local
+          VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID=${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_FIREBASE_MEASUREMENT_ID=${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
+          VITE_RECAPTCHA_ENTERPRISE_KEY=${{ secrets.VITE_RECAPTCHA_ENTERPRISE_KEY }}
+          EOF
 
       - name: Build the website
         run: pnpm run build
