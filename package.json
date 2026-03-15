@@ -1,14 +1,27 @@
 {
   "name": "anweshandev.github.io",
-  "private": true,
-  "version": "1.0.0",
+  "private": false,
+  "version": "3.1.0",
+  "author": {
+	"email": "me@anweshan.cv",
+	"name": "Anweshan Roy Chowdhury",
+	"url": "https://anweshan.cv"
+  },
+  "displayName": "Anweshan Roy Chowdhury",
+  "license": "AGPL-3.0-only",
+
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "postbuild": "npx -y workbox-cli injectManifest workbox-config.cjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+	"playwright:install": "cross-env PLAYWRIGHT_BROWSERS_PATH=P:\\Software\\playwright-browsers playwright install",
+    "test": "cross-env PLAYWRIGHT_BROWSERS_PATH=P:\\Software\\playwright-browsers playwright test",
+    "test:headed": "cross-env PLAYWRIGHT_BROWSERS_PATH=P:\\Software\\playwright-browsers playwright test --headed",
+    "test:ui": "cross-env PLAYWRIGHT_BROWSERS_PATH=P:\\Software\\playwright-browsers playwright test --ui",
+    "test:debug": "cross-env PLAYWRIGHT_BROWSERS_PATH=P:\\Software\\playwright-browsers playwright test --debug"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
@@ -31,6 +44,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.51.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

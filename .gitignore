@@ -47,3 +47,8 @@ build/
 !LICENSE.md
 !TOS.md
 !PRIVACY-POLICY.md
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
