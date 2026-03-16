@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
@@ -6,6 +6,18 @@ import * as THREE from 'three';
 const ParticleField = () => {
   const ref = useRef<THREE.Points>(null!);
   const { mouse, viewport } = useThree();
+  const [scrollPercent, setScrollPercent] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollHeight > 0) {
+        setScrollPercent(window.scrollY / scrollHeight);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   
   const count = 2000;
   const positions = useMemo(() => {
@@ -19,6 +31,8 @@ const ParticleField = () => {
   }, []);
 
   useFrame((_state, delta) => {
+    if (!ref.current) return;
+    
     // Very slow drift
     ref.current.rotation.y += delta / 50;
     ref.current.rotation.x += delta / 60;
@@ -29,9 +43,8 @@ const ParticleField = () => {
     ref.current.position.x += (targetX - ref.current.position.x) * 0.02;
     ref.current.position.y += (targetY - ref.current.position.y) * 0.02;
     
-    // Scroll interaction (using window.scrollY)
-    const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    ref.current.position.z = scrollPercent * 2;
+    // Scroll interaction
+    ref.current.position.z += (scrollPercent * 2 - ref.current.position.z) * 0.1;
   });
 
   return (

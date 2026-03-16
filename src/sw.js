@@ -4,20 +4,36 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox
 
 if (workbox) {
   const { precaching, routing, strategies, expiration, cacheableResponse } = workbox;
+  const isDevHost =
+    self.location.hostname === 'localhost' ||
+    self.location.hostname === '127.0.0.1' ||
+    self.location.hostname.endsWith('.local');
 
-  // Workbox will inject the manifest array right here
-  precaching.precacheAndRoute(self.__WB_MANIFEST || []);
+  if (isDevHost) {
+    self.addEventListener('install', () => {
+      self.skipWaiting();
+    });
+
+    self.addEventListener('activate', (event) => {
+      event.waitUntil(
+        caches.keys().then((cacheNames) =>
+          Promise.all(cacheNames.map((cacheName) => caches.delete(cacheName)))
+        )
+      );
+      self.clients.claim();
+    });
+
+    // In dev/local environments do not register any caching routes.
+  } else {
+
+  // Do not precache JS/CSS/index.html
+  const filteredManifest = (self.__WB_MANIFEST || []).filter((entry) => {
+    const url = typeof entry === 'string' ? entry : entry.url;
+    return !url.endsWith('.js') && !url.endsWith('.css') && !url.endsWith('/index.html') && url !== 'index.html';
+  });
+
+  precaching.precacheAndRoute(filteredManifest);
   precaching.cleanupOutdatedCaches();
-
-  routing.registerRoute(
-    ({ request }) =>
-      request.destination === 'script' ||
-      request.destination === 'style',
-    new strategies.StaleWhileRevalidate({
-      cacheName: 'static-resources',
-      plugins: [new expiration.ExpirationPlugin({ maxEntries: 60 })],
-    })
-  );
 
   routing.registerRoute(
     ({ request }) => request.destination === 'font',
@@ -35,23 +51,12 @@ if (workbox) {
 
   routing.registerRoute(
     ({ url }) => url.pathname.startsWith('/api/'),
-    new strategies.NetworkFirst({
-      cacheName: 'api-cache',
-      networkTimeoutSeconds: 4,
-      plugins: [
-        new expiration.ExpirationPlugin({
-          maxEntries: 50,
-          maxAgeSeconds: 5 * 60,
-        }),
-      ],
-    })
+    new strategies.NetworkOnly()
   );
-
-  const navigationHandler =
-    precaching.createHandlerBoundToURL('/index.html');
 
   routing.registerRoute(
     ({ request }) => request.mode === 'navigate',
-    navigationHandler
+    new strategies.NetworkOnly()
   );
+  }
 }
