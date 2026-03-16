@@ -49,13 +49,13 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-[--background]/80 backdrop-blur-md shadow-lg py-4' : 'bg-transparent py-6'
+        isScrolled ? 'bg-(--background)/80 backdrop-blur-md shadow-lg py-4' : 'bg-transparent py-6'
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold tracking-tighter text-[--primary]">
+        <Link to="/" className="text-2xl font-bold tracking-tighter text-(--primary)">
           {profileData.header.name.split(' ').map(n => n[0]).join('')}
-          <span className="text-[--text]">.dev</span>
+          <span className="text-(--text)">.dev</span>
         </Link>
 
         {/* Desktop Nav */}
@@ -64,22 +64,22 @@ const Navbar = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`text-sm font-medium transition-colors hover:text-[--primary] ${
-                location.pathname === link.path ? 'text-[--primary]' : 'text-[--text]/70'
+              className={`text-sm font-medium transition-colors hover:text-(--primary) ${
+                location.pathname === link.path ? 'text-(--primary)' : 'text-(--text)/70'
               }`}
             >
               {link.name}
             </Link>
           ))}
 
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-[--text]/15 bg-[--background]/50">
-            <span className="text-[10px] uppercase tracking-widest text-[--text]/45">Legal</span>
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-(--text)/15 bg-(--background)/50">
+            <span className="text-[10px] uppercase tracking-widest text-(--text)/45">Legal</span>
             {legalLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-xs transition-colors hover:text-[--primary] ${
-                  location.pathname === link.path ? 'text-[--primary]' : 'text-[--text]/65'
+                className={`text-xs transition-colors hover:text-(--primary) ${
+                  location.pathname === link.path ? 'text-(--primary)' : 'text-(--text)/65'
                 }`}
               >
                 {link.name}
@@ -89,9 +89,10 @@ const Navbar = () => {
 
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-[--primary]/10 transition-colors"
+			role='button'
+            className="p-2 rounded-full hover:bg-(--primary)/10 transition-colors"
           >
-            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            {theme === 'light' ? <Moon role='button' size={20} /> : <Sun size={20} />}
           </button>
         </div>
 
@@ -99,11 +100,11 @@ const Navbar = () => {
         <div className="md:hidden flex items-center space-x-4">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-[--primary]/10 transition-colors"
+            className="p-2 rounded-full hover:bg-(--primary)/10 transition-colors"
           >
             {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
           </button>
-          <button onClick={() => setIsOpen(!isOpen)} className="text-[--text]">
+          <button onClick={() => setIsOpen(!isOpen)} className="text-(--text)">
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -113,7 +114,7 @@ const Navbar = () => {
       <motion.div
         initial={false}
         animate={isOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-        className="md:hidden overflow-hidden bg-[--background] border-t border-[--text]/10"
+        className="md:hidden overflow-hidden bg-(--background) border-t border-(--text)/10"
       >
         <div className="flex flex-col space-y-4 p-6">
           {navLinks.map((link) => (
@@ -122,15 +123,15 @@ const Navbar = () => {
               to={link.path}
               onClick={() => setIsOpen(false)}
               className={`text-lg font-medium ${
-                location.pathname === link.path ? 'text-[--primary]' : 'text-[--text]/70'
+                location.pathname === link.path ? 'text-(--primary)' : 'text-(--text)/70'
               }`}
             >
               {link.name}
             </Link>
           ))}
 
-          <div className="pt-2 mt-2 border-t border-[--text]/10">
-            <p className="text-[10px] uppercase tracking-widest text-[--text]/45 mb-2">Legal</p>
+          <div className="pt-2 mt-2 border-t border-(--text)/10">
+            <p className="text-[10px] uppercase tracking-widest text-(--text)/45 mb-2">Legal</p>
             <div className="flex gap-4">
               {legalLinks.map((link) => (
                 <Link
@@ -138,7 +139,7 @@ const Navbar = () => {
                   to={link.path}
                   onClick={() => setIsOpen(false)}
                   className={`text-sm ${
-                    location.pathname === link.path ? 'text-[--primary]' : 'text-[--text]/70'
+                    location.pathname === link.path ? 'text-(--primary)' : 'text-(--text)/70'
                   }`}
                 >
                   {link.name}

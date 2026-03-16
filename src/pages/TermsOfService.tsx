@@ -3,18 +3,18 @@ import { Link } from 'react-router-dom';
 
 const TermsOfService = () => {
   return (
-    <div className="min-h-screen py-24 bg-[--background]">
+    <div className="min-h-screen py-24 bg-(--background)">
       <SEO
         title="Terms of Service"
         description="Terms and conditions governing use of anweshan.cv and contact form submissions."
       />
 
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto rounded-3xl border border-[--text]/10 bg-white/40 dark:bg-black/20 backdrop-blur-xl p-8 md:p-12">
+        <div className="max-w-4xl mx-auto rounded-3xl border border-(--text)/10 bg-white/40 dark:bg-black/20 backdrop-blur-xl p-8 md:p-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Terms of Service</h1>
-          <p className="text-sm text-[--text]/60 mb-10">Effective Date: March 08, 2026</p>
+          <p className="text-sm text-(--text)/60 mb-10">Effective Date: March 08, 2026</p>
 
-          <div className="space-y-8 text-[--text]/85 leading-relaxed">
+          <div className="space-y-8 text-(--text)/85 leading-relaxed">
             <section>
               <p>
                 These Terms and Conditions ("Terms") govern your use of the website at

@@ -1,51 +1,59 @@
-/* global self */
-import { precacheAndRoute, cleanupOutdatedCaches, createHandlerBoundToURL } from 'workbox-precaching';
-import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate, NetworkFirst } from 'workbox-strategies';
-import { ExpirationPlugin } from 'workbox-expiration';
+/* global self, importScripts, workbox */
 
-// --------------------------------------------------
-// 🔹 Precache build assets
-// --------------------------------------------------
-precacheAndRoute(self.__WB_MANIFEST);
-cleanupOutdatedCaches();
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js');
 
-// --------------------------------------------------
-// 📦 Cache JS & CSS
-// --------------------------------------------------
-registerRoute(
-  ({ request }) =>
-    request.destination === 'script' ||
-    request.destination === 'style',
-  new StaleWhileRevalidate({
-    cacheName: 'static-resources',
-    plugins: [new ExpirationPlugin({ maxEntries: 60 })],
-  })
-);
+// this line is REQUIRED for injectManifest
+self.__WB_MANIFEST;
 
-// --------------------------------------------------
-// 🌐 Cache API calls (network first)
-// --------------------------------------------------
-registerRoute(
-  ({ url }) => url.pathname.startsWith('/api/'),
-  new NetworkFirst({
-    cacheName: 'api-cache',
-    networkTimeoutSeconds: 4,
-    plugins: [
-      new ExpirationPlugin({
-        maxEntries: 50,
-        maxAgeSeconds: 5 * 60,
-      }),
-    ],
-  })
-);
+if (workbox) {
+  const { precaching, routing, strategies, expiration, cacheableResponse } = workbox;
 
-// --------------------------------------------------
-// 📄 SPA navigation fallback
-// --------------------------------------------------
-const navigationHandler = createHandlerBoundToURL('/index.html');
+  precaching.precacheAndRoute(self.__WB_MANIFEST || []);
+  precaching.cleanupOutdatedCaches();
 
-registerRoute(
-  ({ request }) => request.mode === 'navigate',
-  navigationHandler
-);
+  routing.registerRoute(
+    ({ request }) =>
+      request.destination === 'script' ||
+      request.destination === 'style',
+    new strategies.StaleWhileRevalidate({
+      cacheName: 'static-resources',
+      plugins: [new expiration.ExpirationPlugin({ maxEntries: 60 })],
+    })
+  );
+
+  routing.registerRoute(
+    ({ request }) => request.destination === 'font',
+    new strategies.CacheFirst({
+      cacheName: 'font-cache',
+      plugins: [
+        new cacheableResponse.CacheableResponsePlugin({ statuses: [0, 200] }),
+        new expiration.ExpirationPlugin({
+          maxEntries: 30,
+          maxAgeSeconds: 60 * 60 * 24 * 365,
+        }),
+      ],
+    })
+  );
+
+  routing.registerRoute(
+    ({ url }) => url.pathname.startsWith('/api/'),
+    new strategies.NetworkFirst({
+      cacheName: 'api-cache',
+      networkTimeoutSeconds: 4,
+      plugins: [
+        new expiration.ExpirationPlugin({
+          maxEntries: 50,
+          maxAgeSeconds: 5 * 60,
+        }),
+      ],
+    })
+  );
+
+  const navigationHandler =
+    precaching.createHandlerBoundToURL('/index.html');
+
+  routing.registerRoute(
+    ({ request }) => request.mode === 'navigate',
+    navigationHandler
+  );
+}

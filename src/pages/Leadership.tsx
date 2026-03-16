@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { profileData } from '../data';
 import { Users, Lightbulb, TrendingUp, ShieldCheck, Heart, Zap } from 'lucide-react';
 import SEO from '../components/layout/SEO';
+import Leadership3D from '../components/leadership/Leadership3D';
 
 const Leadership = () => {
   const principles = [
@@ -50,7 +51,7 @@ const Leadership = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="p-10 rounded-3xl bg-(--primary)/5 border border-[--primary]/10 hover:border-(--primary)/30 transition-all group"
+              className="p-10 rounded-3xl bg-(--primary)/5 border border-(--primary)/10 hover:border-(--primary)/30 transition-all group"
             >
               <div className="w-14 h-14 rounded-2xl bg-(--background) shadow-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 {p.icon}
@@ -68,7 +69,7 @@ const Leadership = () => {
           <section className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                <Lightbulb className="text-[--primary]" /> Technical Strategy
+                <Lightbulb className="text-(--primary)" /> Technical Strategy
               </h2>
               <p className="text-lg text-(--text)/70 mb-6">
                 I believe in building systems that are not just technically sound, but strategically aligned. This means prioritizing scalability, cost-optimization, and future-proofing while maintaining rapid delivery cycles.
@@ -82,8 +83,9 @@ const Leadership = () => {
                 ))}
               </ul>
             </div>
-            <div className="bg-(--text) text-(--background) p-12 rounded-[3rem] rotate-3">
-              <p className="text-2xl font-serif italic opacity-80">
+            <div className="bg-(--text) text-(--background) p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] lg:rotate-3 relative overflow-hidden">
+              <Leadership3D />
+              <p className="relative z-10 text-xl sm:text-2xl font-serif italic opacity-80">
                 "Leadership is not about being in charge. It is about taking care of those in your charge."
               </p>
             </div>
@@ -91,16 +93,16 @@ const Leadership = () => {
 
           <section className="text-center">
             <h2 className="text-3xl font-bold mb-12">Mentorship Approach</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              <div className="p-8 rounded-2xl border border-(--text)/5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <div className="p-8 rounded-2xl border border-(--text)/5 hover:bg-(--primary)/5 transition-colors">
                 <h4 className="font-bold mb-2">1:1 Coaching</h4>
                 <p className="text-sm opacity-60">Personalized career pathing and technical guidance.</p>
               </div>
-              <div className="p-8 rounded-2xl border border-(--text)/5">
+              <div className="p-8 rounded-2xl border border-(--text)/5 hover:bg-(--primary)/5 transition-colors">
                 <h4 className="font-bold mb-2">Code Quality</h4>
                 <p className="text-sm opacity-60">Establishing high standards through peer reviews.</p>
               </div>
-              <div className="p-8 rounded-2xl border border-(--text)/5">
+              <div className="p-8 rounded-2xl border border-(--text)/5 hover:bg-(--primary)/5 transition-colors">
                 <h4 className="font-bold mb-2">Team Syncs</h4>
                 <p className="text-sm opacity-60">Fostering collaboration and shared technical vision.</p>
               </div>

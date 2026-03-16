@@ -1,13 +1,16 @@
 import { motion } from 'motion/react';
 import { profileData } from '../data';
 import Hero3D from '../components/home/Hero3D';
-import { ArrowRight, Download } from 'lucide-react';
+import { ArrowRight, Brain, Download, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import SEO from '../components/layout/SEO';
+import { useVisitorStats } from '../hooks/useVisitorStats';
+import CompetencyOrbit from '../components/home/CompetencyOrbit';
 
 const Home = () => {
   const [titleIndex, setTitleIndex] = useState(0);
+  const { stats, trackInteraction } = useVisitorStats();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,11 +32,24 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block py-1 px-3 rounded-full bg-[--primary]/10 text-[--primary] text-sm font-medium mb-6">
-              {profileData.header.availability}
-            </span>
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
-              I'm <span className="text-[--primary]">{profileData.header.name}</span>
+            <div className="flex justify-center gap-3 mb-6">
+                <span className="inline-block py-1 px-3 rounded-full bg-(--primary)/10 text-(--primary) text-xs font-bold uppercase tracking-widest border border-(--primary)/20">
+                    {profileData.header.availability}
+                </span>
+                {stats.views > 0 && (
+                    <motion.span 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="flex items-center gap-2 py-1 px-3 rounded-full bg-white/5 text-(--text)/60 text-[10px] font-bold uppercase tracking-widest border border-white/10 backdrop-blur-md"
+                    >
+                        <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                        {stats.views} Global Visits
+                    </motion.span>
+                )}
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter mb-6">
+              I'm <span className="text-(--primary) drop-shadow-[0_0_15px_rgba(74,250,14,0.3)]">{profileData.header.name}</span>
             </h1>
             
             <div className="h-20 md:h-24">
@@ -42,106 +58,131 @@ const Home = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="text-xl md:text-2xl text-[--text]/70 font-medium"
+                className="text-lg sm:text-xl md:text-3xl text-(--text)/70 font-bold tracking-tight italic"
               >
                 {profileData.meta.siteTitleVariants[titleIndex]}
               </motion.p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-6 mt-12">
               <Link
                 to="/projects"
-                className="group flex items-center gap-2 bg-[--primary] text-[--background] px-8 py-4 rounded-full font-bold transition-transform hover:scale-105"
+                onClick={trackInteraction}
+                className="group relative flex items-center justify-center gap-3 bg-(--primary) text-(--background) px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-black transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_-10px_rgba(74,250,14,0.4)]"
               >
-                View Projects <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                Launch Portfolio <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
                 href="https://www.aeee.in/wp-content/uploads/2020/08/Sample-pdf.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 border border-[--text]/20 px-8 py-4 rounded-full font-bold hover:bg-[--text]/5 transition-colors"
+                onClick={trackInteraction}
+                className="flex items-center justify-center gap-3 border-2 border-(--text)/10 px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-black hover:bg-(--text) hover:text-(--background) transition-all active:scale-95"
               >
-                Download Resume <Download size={20} />
+                Architect Resume <Download size={22} />
               </a>
             </div>
+
+            {stats.interactions > 0 && (
+                <div className="mt-12 flex items-center justify-center gap-2 opacity-40">
+                    <Zap size={14} className="text-(--primary)" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em]">
+                        {stats.interactions} Strategic Engagements Today
+                    </span>
+                </div>
+            )}
           </motion.div>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
-          <div className="w-1 h-12 rounded-full bg-linear-to-b from-[--primary] to-transparent" />
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-30">
+          <div className="w-[1px] h-20 bg-linear-to-b from-(--primary) to-transparent" />
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-[--text] text-[--background]">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
-            <div>
-              <h3 className="text-4xl md:text-5xl font-bold text-[--primary] mb-2">
+      <section className="py-24 bg-(--text) text-(--background) relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-(--primary) rounded-full blur-[120px]" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-(--primary) rounded-full blur-[120px]" />
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-16 text-center">
+            <motion.div whileHover={{ y: -10 }} className="transition-transform">
+              <h3 className="text-5xl md:text-7xl font-black text-(--primary) mb-3 tracking-tighter">
                 {profileData.header.socialProof.yearsExperience}+
               </h3>
-              <p className="text-sm uppercase tracking-widest opacity-60">Years Experience</p>
-            </div>
-            <div>
-              <h3 className="text-4xl md:text-5xl font-bold text-[--primary] mb-2">
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Years of Evolution</p>
+            </motion.div>
+            <motion.div whileHover={{ y: -10 }} className="transition-transform">
+              <h3 className="text-5xl md:text-7xl font-black text-(--primary) mb-3 tracking-tighter">
                 {profileData.header.socialProof.teamsLed}
               </h3>
-              <p className="text-sm uppercase tracking-widest opacity-60">Teams Led</p>
-            </div>
-            <div>
-              <h3 className="text-4xl md:text-5xl font-bold text-[--primary] mb-2">
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Teams Orchestrated</p>
+            </motion.div>
+            <motion.div whileHover={{ y: -10 }} className="transition-transform">
+              <h3 className="text-5xl md:text-7xl font-black text-(--primary) mb-3 tracking-tighter">
                 {profileData.header.socialProof.appsDelivered}+
               </h3>
-              <p className="text-sm uppercase tracking-widest opacity-60">Apps Delivered</p>
-            </div>
-            <div>
-              <h3 className="text-4xl md:text-5xl font-bold text-[--primary] mb-2">
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Production Deployments</p>
+            </motion.div>
+            <motion.div whileHover={{ y: -10 }} className="transition-transform">
+              <h3 className="text-5xl md:text-7xl font-black text-(--primary) mb-3 tracking-tighter">
                 {profileData.header.socialProof.cloudCostOptimizations}
               </h3>
-              <p className="text-sm uppercase tracking-widest opacity-60">Cloud Savings</p>
-            </div>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Efficiency Uplift</p>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Executive Summary */}
-      <section className="py-32 container mx-auto px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-12">Executive Summary</h2>
-          <p className="text-xl md:text-2xl leading-relaxed text-[--text]/80">
-            {profileData.summary.long}
+      <section className="py-40 container mx-auto px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-24">
+            <h2 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter">Architectural Philosophy</h2>
+            <div className="w-20 h-1.5 bg-(--primary) mx-auto rounded-full" />
+          </div>
+          
+          <p className="text-2xl md:text-4xl leading-tight text-(--text)/90 font-medium tracking-tight text-center mb-32 italic">
+            "{profileData.summary.long}"
           </p>
           
-          <div className="grid md:grid-cols-2 gap-8 mt-20 text-left">
-            <div className="p-8 rounded-3xl bg-[--primary]/5 border border-[--primary]/10">
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-[--primary] text-[--background] flex items-center justify-center text-sm">01</span>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div 
+                whileHover={{ scale: 1.02 }}
+                className="p-12 rounded-[3rem] bg-(--text) text-(--background) shadow-2xl relative overflow-hidden group h-full"
+            >
+              <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Zap size={80} />
+              </div>
+              <h3 className="text-2xl font-black mb-10 flex items-center gap-4">
+                <span className="text-(--primary)">01</span>
                 Core Competencies
               </h3>
-              <ul className="space-y-3">
-                {profileData.coreCompetencies.map((skill, i) => (
-                  <li key={i} className="flex items-center gap-2 text-[--text]/70">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[--primary]" />
-                    {skill}
-                  </li>
-                ))}
-              </ul>
-            </div>
+              <CompetencyOrbit />
+            </motion.div>
             
-            <div className="p-8 rounded-3xl bg-[--secondary]/5 border border-[--secondary]/10">
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-[--secondary] text-[--background] flex items-center justify-center text-sm">02</span>
+            <motion.div 
+                whileHover={{ scale: 1.02 }}
+                className="p-12 rounded-[3rem] bg-(--primary) text-(--background) shadow-2xl shadow-(--primary)/20 relative overflow-hidden group h-full"
+            >
+              <div className="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-30 transition-opacity">
+                <Brain size={80} />
+              </div>
+              <h3 className="text-2xl font-black mb-10 flex items-center gap-4">
+                <span>02</span>
                 Leadership Style
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-5">
                 {profileData.summary.leadershipStyle.map((style, i) => (
-                  <li key={i} className="flex items-center gap-2 text-[--text]/70">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[--secondary]" />
+                  <li key={i} className="flex items-center gap-4 text-(--background)/80 font-bold uppercase tracking-widest text-xs">
+                    <div className="w-2 h-2 rounded-full bg-(--background)" />
                     {style}
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

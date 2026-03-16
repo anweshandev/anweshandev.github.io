@@ -32,7 +32,7 @@ export const profileData = {
     location: "Kolkata, West Bengal, India",
     availability: "Open to consulting & architecture engagements",
     contact: {
-      email: "anweshanrc15@gmail.com",
+      email: "me@anweshan.cv",
       linkedin: "https://linkedin.com/in/anweshandev",
       github: "https://github.com/anweshandev",
       portfolio: "anweshan.dev"
