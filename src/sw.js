@@ -2,12 +2,10 @@
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js');
 
-// this line is REQUIRED for injectManifest
-self.__WB_MANIFEST;
-
 if (workbox) {
   const { precaching, routing, strategies, expiration, cacheableResponse } = workbox;
 
+  // Workbox will inject the manifest array right here
   precaching.precacheAndRoute(self.__WB_MANIFEST || []);
   precaching.cleanupOutdatedCaches();
 

@@ -35,7 +35,7 @@ const Experience = () => {
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Engineer</span>
             </div>
-            <div className="hidden md:block w-20 h-[2px] bg-(--text)/10 relative">
+            <div className="hidden md:block w-20 h-0.5 bg-(--text)/10 relative">
                 <div className="absolute top-1/2 left-0 w-full h-full bg-linear-to-r from-transparent via-(--primary) to-transparent scale-x-0 group-hover:scale-x-100 transition-transform" />
             </div>
             <div className="flex flex-col items-center gap-3 group">
@@ -44,9 +44,9 @@ const Experience = () => {
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Senior</span>
             </div>
-            <div className="hidden md:block w-20 h-[2px] bg-(--text)/10" />
+            <div className="hidden md:block w-20 h-0.5 bg-(--text)/10" />
             <div className="flex flex-col items-center gap-3 group">
-                <div className="w-20 h-20 rounded-[2rem] bg-(--primary) flex items-center justify-center text-(--background) shadow-xl shadow-(--primary)/20 group-hover:scale-105 transition-all">
+                <div className="w-20 h-20 rounded-4xl bg-(--primary) flex items-center justify-center text-(--background) shadow-xl shadow-(--primary)/20 group-hover:scale-105 transition-all">
                     <TrendingUp size={28} />
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-(--primary)">Team Lead</span>
@@ -56,7 +56,7 @@ const Experience = () => {
 
         <div className="relative max-w-5xl mx-auto">
           {/* Vertical Timeline Line */}
-          <div className="absolute left-0 lg:left-1/2 lg:-translate-x-1/2 top-0 bottom-0 w-[2px] bg-linear-to-b from-(--primary) via-(--secondary) to-transparent opacity-20" />
+          <div className="absolute left-0 lg:left-1/2 lg:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-linear-to-b from-(--primary) via-(--secondary) to-transparent opacity-20" />
 
           <div className="space-y-40">
             {profileData.experience.map((exp, index) => (
@@ -70,14 +70,14 @@ const Experience = () => {
                 }`}
               >
                 {/* Timeline Node */}
-                <div className="absolute left-[-5px] lg:left-1/2 lg:-translate-x-1/2 top-0 w-3 h-3 rounded-full bg-(--primary) z-10 shadow-[0_0_20px_var(--primary)]" />
+                <div className="absolute -left-1.25 lg:left-1/2 lg:-translate-x-1/2 top-0 w-3 h-3 rounded-full bg-(--primary) z-10 shadow-[0_0_20px_var(--primary)]" />
 
                 <div className="lg:w-[45%] pl-8 lg:pl-0">
-                  <div className={`p-6 sm:p-10 rounded-[2rem] sm:rounded-[3rem] bg-(--text) text-(--background) shadow-2xl relative overflow-hidden group hover:scale-[1.02] transition-all ${
+                  <div className={`p-6 sm:p-10 rounded-4xl sm:rounded-[3rem] bg-(--text) text-(--background) shadow-2xl relative overflow-hidden group hover:scale-[1.02] transition-all ${
                     index % 2 === 0 ? 'lg:text-left' : 'lg:text-right'
                   }`}>
                     {/* Decorative Number */}
-                    <div className="absolute top-[-10px] sm:top-[-20px] right-[-10px] sm:right-[-20px] text-7xl sm:text-9xl font-black text-(--background)/5 pointer-events-none">
+                    <div className="absolute -top-2.5 sm:-top-5 -right-2.5 sm:-right-5 text-7xl sm:text-9xl font-black text-(--background)/5 pointer-events-none">
                         0{profileData.experience.length - index}
                     </div>
 
