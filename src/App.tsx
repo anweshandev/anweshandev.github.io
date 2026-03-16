@@ -29,17 +29,21 @@ const LoadingScreen = () => (
 );
 
 function App() {
-	const useScriptHook = import.meta.env.PROD ? useScript : useNoop;
+	const isLocalHost =
+		typeof window !== "undefined" &&
+		(window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+	const shouldLoadAppzi = import.meta.env.PROD && !isLocalHost;
+	const useScriptHook = shouldLoadAppzi ? useScript : useNoop;
 
 	const status = useScriptHook("https://w.appzi.io/w.js?token=WsM7K", {
 		removeOnUnmount: true,
 	});
 
 	useEffect(() => {
-		if (status === "ready") {
+		if (shouldLoadAppzi && status === "ready") {
 			console.log("Appzi should be ready in production");
 		}
-	}, [status]);
+	}, [shouldLoadAppzi, status]);
 
 	return (
 		<Router>

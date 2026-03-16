@@ -14,23 +14,22 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
+const isBrowser = typeof window !== "undefined";
+const isLocalhost = isBrowser && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+const isProdRuntime = import.meta.env.PROD && !isLocalhost;
+
 // Initialize Firebase App
 const app = initializeApp(firebaseConfig);
 
 // Initialize Firestore
 const db = getFirestore(app);
 
-// Initialize Analytics (Safe export)
-const analytics = typeof window !== "undefined" ? getAnalytics(app) : undefined;
+// Initialize Analytics only for real production runtime.
+const analytics = isProdRuntime ? getAnalytics(app) : undefined;
 
 // Initialize App Check
 let appCheck: ReturnType<typeof initializeAppCheck> | undefined;
-if (typeof window !== "undefined") {
-  if (import.meta.env.DEV && import.meta.env.VITE_FIREBASE_APPCHECK_DEBUG_TOKEN) {
-    (self as typeof self & { FIREBASE_APPCHECK_DEBUG_TOKEN?: string }).FIREBASE_APPCHECK_DEBUG_TOKEN =
-      import.meta.env.VITE_FIREBASE_APPCHECK_DEBUG_TOKEN;
-  }
-
+if (isProdRuntime) {
   appCheck = initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_ENTERPRISE_KEY),
     isTokenAutoRefreshEnabled: true,
