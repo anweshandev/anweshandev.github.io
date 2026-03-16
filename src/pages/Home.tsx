@@ -20,7 +20,11 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen flex flex-col">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="relative min-h-screen flex flex-col"
+    >
       <SEO />
       {/* Hero Section */}
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden px-6">
@@ -30,7 +34,7 @@ const Home = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="flex justify-center gap-3 mb-6">
                 <span className="inline-block py-1 px-3 rounded-full bg-(--primary)/10 text-(--primary) text-xs font-bold uppercase tracking-widest border border-(--primary)/20">
@@ -57,7 +61,6 @@ const Home = () => {
                 key={titleIndex}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
                 className="text-lg sm:text-xl md:text-3xl text-(--text)/70 font-bold tracking-tight italic"
               >
                 {profileData.meta.siteTitleVariants[titleIndex]}
@@ -186,7 +189,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };
 

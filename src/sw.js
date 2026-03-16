@@ -5,19 +5,14 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox
 if (workbox) {
   const { precaching, routing, strategies, expiration, cacheableResponse } = workbox;
 
-  // Workbox will inject the manifest array right here
-  precaching.precacheAndRoute(self.__WB_MANIFEST || []);
-  precaching.cleanupOutdatedCaches();
+  // Do not precache JS/CSS/index.html
+  const filteredManifest = (self.__WB_MANIFEST || []).filter((entry) => {
+    const url = typeof entry === 'string' ? entry : entry.url;
+    return !url.endsWith('.js') && !url.endsWith('.css') && !url.endsWith('/index.html') && url !== 'index.html';
+  });
 
-  routing.registerRoute(
-    ({ request }) =>
-      request.destination === 'script' ||
-      request.destination === 'style',
-    new strategies.StaleWhileRevalidate({
-      cacheName: 'static-resources',
-      plugins: [new expiration.ExpirationPlugin({ maxEntries: 60 })],
-    })
-  );
+  precaching.precacheAndRoute(filteredManifest);
+  precaching.cleanupOutdatedCaches();
 
   routing.registerRoute(
     ({ request }) => request.destination === 'font',
@@ -47,11 +42,8 @@ if (workbox) {
     })
   );
 
-  const navigationHandler =
-    precaching.createHandlerBoundToURL('/index.html');
-
   routing.registerRoute(
     ({ request }) => request.mode === 'navigate',
-    navigationHandler
+    new strategies.NetworkOnly()
   );
 }

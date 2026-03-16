@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
-import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { getAI, getTemplateGenerativeModel, GoogleAIBackend } from "firebase/ai";
 
 const firebaseConfig = {
@@ -25,12 +25,18 @@ const analytics = typeof window !== "undefined" ? getAnalytics(app) : undefined;
 
 // Initialize App Check
 let appCheck: ReturnType<typeof initializeAppCheck> | undefined;
-if (typeof window !== "undefined" && import.meta.env.PROD) {
+if (typeof window !== "undefined") {
+  if (import.meta.env.DEV && import.meta.env.VITE_FIREBASE_APPCHECK_DEBUG_TOKEN) {
+    (self as typeof self & { FIREBASE_APPCHECK_DEBUG_TOKEN?: string }).FIREBASE_APPCHECK_DEBUG_TOKEN =
+      import.meta.env.VITE_FIREBASE_APPCHECK_DEBUG_TOKEN;
+  }
+
   appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaEnterpriseProvider(import.meta.env.VITE_RECAPTCHA_ENTERPRISE_KEY),
+    provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_ENTERPRISE_KEY),
     isTokenAutoRefreshEnabled: true,
   });
 }
+
 
 // Initialize AI SDK (Gemini Backend)
 const ai = getAI(app, { backend: new GoogleAIBackend() });
