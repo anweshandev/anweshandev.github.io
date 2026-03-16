@@ -14,31 +14,46 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-// 1. Initialize Firebase App
-const app = initializeApp(firebaseConfig);
+let app: ReturnType<typeof initializeApp> | undefined;
+let db: ReturnType<typeof getFirestore> | undefined;
+let appCheck: ReturnType<typeof initializeAppCheck> | undefined;
+let analytics: ReturnType<typeof getAnalytics> | undefined;
+let ai: ReturnType<typeof getAI> | undefined;
+let aiModel: ReturnType<typeof getTemplateGenerativeModel> | undefined;
 
-// 2. Initialize App Check
-if (typeof window !== "undefined") {
-  initializeAppCheck(app, {
-    provider: new ReCaptchaEnterpriseProvider(import.meta.env.VITE_RECAPTCHA_ENTERPRISE_KEY),
-    isTokenAutoRefreshEnabled: true,
-  });
+if(import.meta.env.PROD) {
+
+	// 1. Initialize Firebase App
+	app = initializeApp(firebaseConfig);
+	
+	// 2. Initialize App Check
+	if (typeof window !== "undefined") {
+	  appCheck = initializeAppCheck(app, {
+		provider: new ReCaptchaEnterpriseProvider(import.meta.env.VITE_RECAPTCHA_ENTERPRISE_KEY),
+		isTokenAutoRefreshEnabled: true,
+	  });
+	}
+	
+	// 3. Initialize Firestore
+	db = getFirestore(app);
+	
+	// 4. Initialize Analytics (Safe export)
+	analytics = typeof window !== "undefined" ? getAnalytics(app) : undefined;
+	
+	// 5. Initialize AI SDK (Gemini Backend)
+	ai = getAI(app, { backend: new GoogleAIBackend() });
+	aiModel = getTemplateGenerativeModel(ai);
 }
 
-// 3. Initialize Firestore
-export const db = getFirestore(app);
-
-// 4. Initialize Analytics (Safe export)
-export const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;
-
-// 5. Initialize AI SDK (Gemini Backend)
-export const ai = getAI(app, { backend: new GoogleAIBackend() });
-export const aiModel = getTemplateGenerativeModel(ai);
 
 // 6. Environment-Specific Logic
-if (import.meta.env.DEV) {
+if (import.meta.env.DEV && typeof db !== 'undefined') {
   connectFirestoreEmulator(db, '127.0.0.1', 9001);
   console.log("🛠️ Firestore Emulator connected: http://127.0.0.1:9001");
+}
+
+export {
+	db, appCheck, analytics, ai, aiModel
 }
 
 export default app;

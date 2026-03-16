@@ -58,14 +58,14 @@ const Awards = () => {
         {/* Certifications Section */}
         <section className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center">Professional Certifications</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {profileData.certifications.map((cert, i) => (
               <motion.div
                 key={i}
                 whileHover={{ y: -5 }}
-                className="p-8 rounded-2xl border border-(--text)/10 text-center hover:bg-(--primary)/5 hover:border-(--primary)/30 transition-all"
+                className="p-8 rounded-2xl border border-(--text)/10 text-center hover:bg-(--primary)/5 hover:border-(--primary)/30 transition-all shadow-sm"
               >
-                <div className="w-12 h-12 rounded-full bg-(--text)/5 flex items-center justify-center mx-auto mb-4">
+                <div className="w-12 h-12 rounded-full bg-(--text)/5 flex items-center justify-center mx-auto mb-4 group-hover:bg-(--primary)/10 transition-colors">
                   <ShieldCheck className="text-(--primary)" />
                 </div>
                 <h4 className="font-bold text-sm uppercase tracking-wider">{cert}</h4>

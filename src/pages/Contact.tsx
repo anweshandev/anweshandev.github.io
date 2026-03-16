@@ -19,6 +19,8 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
+    if(typeof db === 'undefined') return false;
+    // Explicitly type db as Firestore | undefined
     
     try {
       await addDoc(collection(db, 'contacts'), {
@@ -59,7 +61,7 @@ const Contact = () => {
               <div className="space-y-6 relative z-10">
                 <a
                   href={`mailto:${profileData.header.contact.email}`}
-                  className="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/10"
+                  className="flex items-center gap-4 p-4 rounded-2xl hover:bg-(--background)/10 transition-colors border border-transparent hover:border-(--background)/20"
                 >
                   <div className="w-12 h-12 rounded-xl bg-(--primary)/10 flex items-center justify-center text-(--primary)">
                     <Mail size={24} />
@@ -74,7 +76,7 @@ const Contact = () => {
                   href={profileData.header.contact.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/10"
+                  className="flex items-center gap-4 p-4 rounded-2xl hover:bg-(--background)/10 transition-colors border border-transparent hover:border-(--background)/20"
                 >
                   <div className="w-12 h-12 rounded-xl bg-(--primary)/10 flex items-center justify-center text-(--primary)">
                     <Linkedin size={24} />
@@ -89,7 +91,7 @@ const Contact = () => {
                   href={profileData.header.contact.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/10"
+                  className="flex items-center gap-4 p-4 rounded-2xl hover:bg-(--background)/10 transition-colors border border-transparent hover:border-(--background)/20"
                 >
                   <div className="w-12 h-12 rounded-xl bg-(--primary)/10 flex items-center justify-center text-(--primary)">
                     <Github size={24} />

@@ -89,9 +89,10 @@ const Navbar = () => {
 
           <button
             onClick={toggleTheme}
+			role='button'
             className="p-2 rounded-full hover:bg-(--primary)/10 transition-colors"
           >
-            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            {theme === 'light' ? <Moon role='button' size={20} /> : <Sun size={20} />}
           </button>
         </div>
 
