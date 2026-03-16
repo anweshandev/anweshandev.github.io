@@ -6,6 +6,7 @@ export const useVisitorStats = () => {
   const [stats, setStats] = useState({ views: 0, interactions: 0 });
 
   useEffect(() => {
+  if (import.meta.env.DEV) return;
 	if(!db) return;
     const statsDoc = doc(db, 'analytics', 'global');
 
@@ -47,6 +48,7 @@ export const useVisitorStats = () => {
   }, []);
 
   const trackInteraction = useCallback(async () => {
+  if (import.meta.env.DEV) return;
 	if(!db) return;
 
     const statsDoc = doc(db, 'analytics', 'global');

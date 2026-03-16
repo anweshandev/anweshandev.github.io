@@ -83,7 +83,7 @@ const Leadership = () => {
                 ))}
               </ul>
             </div>
-            <div className="bg-(--text) text-(--background) p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] lg:rotate-3 relative overflow-hidden">
+            <div className="bg-(--text) text-(--background) p-8 sm:p-12 rounded-4xl sm:rounded-[3rem] lg:rotate-3 relative overflow-hidden">
               <Leadership3D />
               <p className="relative z-10 text-xl sm:text-2xl font-serif italic opacity-80">
                 "Leadership is not about being in charge. It is about taking care of those in your charge."

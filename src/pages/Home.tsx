@@ -151,15 +151,19 @@ const Home = () => {
             "{profileData.summary.long}"
           </p>
           
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 xl:gap-10 items-stretch">
             <motion.div 
-                whileHover={{ scale: 1.02 }}
-                className="p-12 rounded-[3rem] bg-(--text) text-(--background) shadow-2xl relative overflow-hidden group h-full"
+                initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+                whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -8, scale: 1.01 }}
+                className="p-8 md:p-10 rounded-[2.5rem] bg-(--text) text-(--background) shadow-2xl relative overflow-hidden group h-full"
             >
-              <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+              <div className="absolute -top-4 -right-2 p-8 opacity-10 group-hover:opacity-25 transition-opacity duration-500">
                 <Zap size={80} />
               </div>
-              <h3 className="text-2xl font-black mb-10 flex items-center gap-4">
+              <h3 className="text-xl md:text-2xl font-black mb-7 md:mb-8 flex items-center gap-4 tracking-tight">
                 <span className="text-(--primary)">01</span>
                 Core Competencies
               </h3>
@@ -167,24 +171,52 @@ const Home = () => {
             </motion.div>
             
             <motion.div 
-                whileHover={{ scale: 1.02 }}
-                className="p-12 rounded-[3rem] bg-(--primary) text-(--background) shadow-2xl shadow-(--primary)/20 relative overflow-hidden group h-full"
+                initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+                whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -8, scale: 1.01 }}
+                className="p-8 md:p-10 rounded-[2.5rem] bg-(--primary) text-(--background) shadow-2xl shadow-(--primary)/20 relative overflow-hidden group h-full flex flex-col"
             >
-              <div className="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-30 transition-opacity">
-                <Brain size={80} />
+              <div className="absolute -top-4 -right-2 p-8 opacity-15 group-hover:opacity-30 transition-opacity duration-500">
+                <Brain size={96} aria-hidden="true" />
               </div>
-              <h3 className="text-2xl font-black mb-10 flex items-center gap-4">
+              <h3 className="text-xl md:text-2xl font-black mb-8 flex items-center gap-4 tracking-tight relative z-10">
                 <span>02</span>
                 Leadership Style
               </h3>
-              <ul className="space-y-5">
+
+              <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={{
+                  hidden: {},
+                  show: { transition: { staggerChildren: 0.11, delayChildren: 0.18 } }
+                }}
+                className="flex-1 flex flex-col justify-evenly relative z-10"
+              >
                 {profileData.summary.leadershipStyle.map((style, i) => (
-                  <li key={i} className="flex items-center gap-4 text-(--background)/80 font-bold uppercase tracking-widest text-xs">
-                    <div className="w-2 h-2 rounded-full bg-(--background)" />
-                    {style}
-                  </li>
+                  <motion.div
+                    key={i}
+                    variants={{ hidden: { opacity: 0, x: -18 }, show: { opacity: 1, x: 0 } }}
+                    transition={{ type: 'spring', stiffness: 130, damping: 17 }}
+                    className="flex items-start gap-5 py-4 border-b border-(--background)/20 last:border-0"
+                  >
+                    <span className="text-4xl md:text-5xl font-black opacity-[0.18] tabular-nums leading-none shrink-0 select-none">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <p className="text-sm md:text-base font-black uppercase tracking-widest leading-tight pt-2">
+                      {style}
+                    </p>
+                  </motion.div>
                 ))}
-              </ul>
+              </motion.div>
+
+              <p className="mt-6 text-[10px] font-black uppercase tracking-[0.3em] opacity-35 flex items-center gap-3 relative z-10">
+                <span className="w-8 h-px bg-(--background)/50 inline-block" />
+                Principles in practice
+              </p>
             </motion.div>
           </div>
         </div>
