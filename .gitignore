@@ -41,7 +41,7 @@ service_account.json
 # Ignore folder
 build/
 .firebase/
-
+screens/
 
 # Legal Markdown Files
 !LICENSE.md

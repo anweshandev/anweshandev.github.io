@@ -8,7 +8,7 @@ const MainLayout = () => {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-[--background] text-[--text] selection:bg-[--primary] selection:text-[--background]">
+    <div className="min-h-screen bg-(--background) text-(--text) selection:bg-(--primary) selection:text-(--background)">
       <Navbar />
       <main className="relative z-10 pt-20">
         <AnimatePresence mode="wait">

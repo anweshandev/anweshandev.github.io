@@ -50,7 +50,7 @@ const Leadership = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="p-10 rounded-3xl bg-(--primary)/5 border border-[--primary]/10 hover:border-(--primary)/30 transition-all group"
+              className="p-10 rounded-3xl bg-(--primary)/5 border border-(--primary)/10 hover:border-(--primary)/30 transition-all group"
             >
               <div className="w-14 h-14 rounded-2xl bg-(--background) shadow-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                 {p.icon}
@@ -68,7 +68,7 @@ const Leadership = () => {
           <section className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                <Lightbulb className="text-[--primary]" /> Technical Strategy
+                <Lightbulb className="text-(--primary)" /> Technical Strategy
               </h2>
               <p className="text-lg text-(--text)/70 mb-6">
                 I believe in building systems that are not just technically sound, but strategically aligned. This means prioritizing scalability, cost-optimization, and future-proofing while maintaining rapid delivery cycles.
