@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 import { getAI, getTemplateGenerativeModel, GoogleAIBackend } from "firebase/ai";
@@ -14,43 +14,27 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-let app: ReturnType<typeof initializeApp> | undefined;
-let db: ReturnType<typeof getFirestore> | undefined;
+// Initialize Firebase App
+const app = initializeApp(firebaseConfig);
+
+// Initialize Firestore
+const db = getFirestore(app);
+
+// Initialize Analytics (Safe export)
+const analytics = typeof window !== "undefined" ? getAnalytics(app) : undefined;
+
+// Initialize App Check
 let appCheck: ReturnType<typeof initializeAppCheck> | undefined;
-let analytics: ReturnType<typeof getAnalytics> | undefined;
-let ai: ReturnType<typeof getAI> | undefined;
-let aiModel: ReturnType<typeof getTemplateGenerativeModel> | undefined;
-
-if(import.meta.env.PROD) {
-
-	// 1. Initialize Firebase App
-	app = initializeApp(firebaseConfig);
-	
-	// 2. Initialize App Check
-	if (typeof window !== "undefined") {
-	  appCheck = initializeAppCheck(app, {
-		provider: new ReCaptchaEnterpriseProvider(import.meta.env.VITE_RECAPTCHA_ENTERPRISE_KEY),
-		isTokenAutoRefreshEnabled: true,
-	  });
-	}
-	
-	// 3. Initialize Firestore
-	db = getFirestore(app);
-	
-	// 4. Initialize Analytics (Safe export)
-	analytics = typeof window !== "undefined" ? getAnalytics(app) : undefined;
-	
-	// 5. Initialize AI SDK (Gemini Backend)
-	ai = getAI(app, { backend: new GoogleAIBackend() });
-	aiModel = getTemplateGenerativeModel(ai);
+if (typeof window !== "undefined" && import.meta.env.PROD) {
+  appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaEnterpriseProvider(import.meta.env.VITE_RECAPTCHA_ENTERPRISE_KEY),
+    isTokenAutoRefreshEnabled: true,
+  });
 }
 
-
-// 6. Environment-Specific Logic
-if (import.meta.env.DEV && typeof db !== 'undefined') {
-  connectFirestoreEmulator(db, '127.0.0.1', 9001);
-  console.log("🛠️ Firestore Emulator connected: http://127.0.0.1:9001");
-}
+// Initialize AI SDK (Gemini Backend)
+const ai = getAI(app, { backend: new GoogleAIBackend() });
+const aiModel = getTemplateGenerativeModel(ai);
 
 export {
 	db, appCheck, analytics, ai, aiModel
