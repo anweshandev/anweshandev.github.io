@@ -95,7 +95,7 @@ const Home = () => {
         </div>
 
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-30">
-          <div className="w-[1px] h-20 bg-linear-to-b from-(--primary) to-transparent" />
+          <div className="w-px h-20 bg-linear-to-b from-(--primary) to-transparent" />
         </div>
       </section>
 
