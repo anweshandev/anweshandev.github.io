@@ -74,7 +74,7 @@ const Orbit = () => {
 
 const CompetencyOrbit = () => {
   return (
-    <div className="w-full h-[500px] cursor-grab active:cursor-grabbing">
+    <div className="w-full h-125 cursor-grab active:cursor-grabbing">
       <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />

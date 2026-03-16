@@ -59,7 +59,7 @@ const Projects = () => {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   {project.problemStatement && (
-                    <div className="p-8 rounded-[2rem] bg-(--text) text-(--background) shadow-xl">
+                    <div className="p-8 rounded-4xl bg-(--text) text-(--background) shadow-xl">
                       <div className="flex items-center gap-3 mb-6 text-(--primary)">
                         <Target size={20} />
                         <h4 className="font-black text-[10px] uppercase tracking-[0.3em]">The Challenge</h4>
@@ -68,7 +68,7 @@ const Projects = () => {
                     </div>
                   )}
                   {project.businessImpact && (
-                    <div className="p-8 rounded-[2rem] bg-(--primary) text-(--background) shadow-xl shadow-(--primary)/10">
+                    <div className="p-8 rounded-4xl bg-(--primary) text-(--background) shadow-xl shadow-(--primary)/10">
                       <div className="flex items-center gap-3 mb-6">
                         <TrendingUp size={20} />
                         <h4 className="font-black text-[10px] uppercase tracking-[0.3em]">Business Impact</h4>
