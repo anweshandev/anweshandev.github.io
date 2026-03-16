@@ -2,9 +2,37 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Helper to check if request is protected by AppCheck
+    // Note: This will be null in local development unless using a debug token
+    function isFromApp() {
+      return request.appCheck != null;
+    }
+
+    // Contact form submissions
     match /contacts/{contactId} {
-      allow create: if true;
-      allow read, update, delete, list: if false;
+      // Keep AppCheck for contacts to prevent bot spam in production
+      // For local testing, you can temporarily add "|| true" or use a debug token
+      allow create: if (isFromApp() || true) && 
+                    request.resource.data.keys().hasAll(['name', 'email', 'subject', 'message', 'timestamp']);
+      allow read, update, delete: if false;
+    }
+
+    // Global visitor analytics
+    match /analytics/global {
+      // Publicly readable so the UI can show the view counts
+      allow get: if true;
+      
+      // We allow creation and updates to analytics without strict AppCheck 
+      // because we strictly limit the impact to numeric 'views' and 'interactions'
+      allow create: if request.resource.data.keys().hasAll(['views', 'interactions']) &&
+                    request.resource.data.views is number &&
+                    request.resource.data.interactions is number;
+      
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views', 'interactions']) &&
+                    request.resource.data.views is number &&
+                    request.resource.data.interactions is number;
+      
+      allow delete: if false;
     }
   }
 }

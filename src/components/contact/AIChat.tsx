@@ -111,7 +111,7 @@ const AIChat = () => {
                   key={i} 
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`max-w-[85%] p-5 rounded-[2rem] text-sm leading-relaxed shadow-sm ${
+                  <div className={`max-w-[85%] p-5 rounded-4xl text-sm leading-relaxed shadow-sm ${
                     msg.role === 'user' 
                       ? 'bg-(--primary) text-(--background) rounded-tr-none' 
                       : 'bg-(--text)/5 text-(--text) rounded-tl-none border border-(--text)/5'
@@ -122,7 +122,7 @@ const AIChat = () => {
               ))}
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-(--text)/5 p-5 rounded-[2rem] rounded-tl-none">
+                  <div className="bg-(--text)/5 p-5 rounded-4xl rounded-tl-none">
                     <div className="flex gap-1.5">
                       <div className="w-2 h-2 rounded-full bg-(--primary) animate-bounce" />
                       <div className="w-2 h-2 rounded-full bg-(--primary) animate-bounce [animation-delay:0.2s]" />
